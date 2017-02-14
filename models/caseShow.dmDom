@@ -1,0 +1,17 @@
+# Continuation of the DataMetaDOM showcase: includable file
+
+namespace org.ebay.datameta.examples.basic.incl
+
+# Must include version in every source file at least
+ver 1.0.0
+
+# circular references are ok, they are automatically reconciled
+include caseShow
+
+record ExampleNsRec
+   +int[4] id
+   +string[16] name
+   -org.ebay.datameta.examples.basic.show.WordedEnum choices
+# remove the identity to see the error that this record can not be referenced in IDL
+   identity(auto) id
+end

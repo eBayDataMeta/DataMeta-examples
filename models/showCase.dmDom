@@ -1,0 +1,286 @@
+# Showcase of different features of the DataMetaDOM, the cross-platform Structured Data definition Language
+
+# Namespaces can be translated to Java classes, or mapped to database schemas,
+# to address entities such as com:ebay:sojourner:WordEnum etc
+# there can be only one namespace operator in the file and it must be first one
+# all referenced types should be present for the parsing; external references
+# not submitted to the parser can be handled via standard types.
+namespace org.ebay.datameta.examples.basic.show
+
+# include foreign file: .dmDom extension assumed, looked in path defined by the DATAMETA_LIB environment variable,
+# as any Path variable - path elements delimited by File::PATH_SEPARATOR which on Linux and Mac OS is the colon.
+# The included file should not have any version definition, or the version must be exactly the same.
+include caseShow
+
+# The model version
+ver 1.0.0
+
+# Documentation. This is record-level documentation in plain text format.
+doc plain
+
+The doc tag applies to the next element. Doc tag with the same target is discarded when redefined.
+
+Worded enum: can specify any count separated by commas and/or whitespace
+must start with a word character such as a letter
+end
+# Same docs with JavaDoc specifics. Java code generators pick the "doc java" version if present, otherwise
+# "doc plain" if present.
+
+doc java
+<b>Worded enum</b>: can specify any count separated by commas and/or whitespace
+must start with a word character such as a letter.
+Used in {@link KitchenSink}
+end
+enum WordedEnum
+# No docs for separate words although Java, for example, permits that.
+# If those words are not self-explanatory, document it on the enum level.
+# This is consistent with other map-like types.
+   Int, Long, String, VarString, Bool,
+   _Date, Time, Bitset DateTime,
+end
+
+enum BaseColor
+   Red, Green, Blue
+end
+
+# BitSet: one instance of it can return any set of the members, one of each or none.
+# concrete implementation is uncoupled from the definition.
+# a generator may decide on the concrete type to generate this into, whether it's
+# a primitive integral type for small sets or a BitSet for bigger ones, with more than 64 members.
+# for a string type, first non-blank symbol on the line serves as a delimiter
+# and when a DataMetaDOM model built using the API is exported to the source
+# this delimiter is chosen automatically from a preference list.
+# the keys are the powers of 2
+# All bitset/map formats are rendered in Ruby syntax, see examples below
+# It's to take advantage of the Ruby eval and inspect to save on parsing/rendering
+bitset MultiSetString string[128]
+   0 => " a ",
+   1 =>'  First choice ',
+   2 =>
+%q{ Uninterpolated \t string
+ with wha\teve\r
+   even with multiline
+},
+   3 => %Q{Interpolated \t String \nWith all \n\tescapes active},
+   4 => %q<Uninterpolated \t string angled  delimiters>,
+# can skip a few bits, they will remain unmapped
+   65 => "sixty Five",
+   66 => "sixty Six",
+   96 => "ninety Six",
+   128 => "one twenty eight",
+   131 => "one thirty one",
+end
+
+doc plain
+Maps zero to ten and one hundredth,
+maps one to all ones,
+maps two to all twos.
+And that's it!
+end
+doc java
+This Bit Set maps:
+<ul>
+<li>zero to ten and one hundredth</li>
+<li>one to all ones</li>
+<li>maps two to all twos</li>
+</ul>
+And that's <b><i>it</i></b> to it!
+end
+bitset DocumentedAndVersionedBitSet numeric[18.3]
+   0 => 10.01,
+   1 => 111.111,
+   2 => 2222.2222
+end
+
+# Mapping from one type to another, a.k.a. Hash in terms of Ruby, Map in terms of Java/Scala.
+# First type after the record name is the type of the key, the second type is the type of the value.
+# A generator decides which concrete type to generate this into.
+mapping Weights int[4] numeric[8.3]
+   0 => 153.232,
+   1 => 987.0
+end
+
+mapping Heights char[1] float[8]
+   :a => 253.232,
+   :b => 887.0
+end
+
+doc plain
+Going deep to the point A,
+And next to the point B.
+end
+
+doc java
+Going deep to the point <tt>A</tt>,
+And next to the point <tt>B</tt>.
+end
+
+mapping Depths char[1] float[3]
+   :a => 353.232,
+   :b => 787.0
+end
+
+mapping Lengths string[3] datetime
+   "foo" => DateTime.now,
+   'bar' => DateTime.parse("2012-09-29T23:45:59Z")
+end
+
+# on a Record, prefix + means "required" (not null, mandatory)
+#              prefix - means "optional" (nullable, not required)
+# you can define referenced fields anywhere, they are resolved
+# at the end of the parsing
+# the = symbol after the field name indicates a default if any, starts right after
+# the = symbol, ends with the end of the line
+record EmbeddedType
+  +int[2] intCode
+  +char[2] txtCode=XX
+  -Embodiment embo
+  identity intCode
+end
+
+record Embodiment
+  +int[4] id
+  +string[32] inclusivement =Truly Inclusive!
+  +EmbeddedType mbe =pass this default to the constructor with one param
+  identity id
+end
+
+# Record without an identity
+record IdLess
+   +int[4] count
+   -string[32] name
+   +datetime when
+end
+
+record WithoutIdentity
+   +int[4] a
+   +int[8] b
+end
+
+# Example of a record with id containing multiple fields
+record MultiFieldId
+  +int[4] a
+  +int[8] b
+  +char[3] c
+  -datetime timing
+  +string[10] text
+  identity a, b, c
+end
+
+doc plain
+an example of everything thrown at it,
+all we have
+end
+doc java
+An example of <b>everything</b> thrown at it,
+All we have.
+end
+record KitchenSink
+# override default version set on the file
+  +int[8] id
+  +string[32] context
+  +set{string[16]} strings
+  +list{EmbeddedType} embeds
+  +deque{int[4]} ints
+  +set{datetime} times
+  +set{IdLess} idLessNess
+  +map{string[32], int[4]} strToInt
+  -map{int[8], EmbeddedType} longToEmb
+  +map{EmbeddedType, string} embToString
+  +map{EmbeddedType, Embodiment} embToEmb
+doc plain
+The string type is a variable string
+end
+doc java
+The {@link java.lang.String} type is a variable string.
+end
+  +string[32] name
+doc plain
+The char type is fixed string
+end
+  +char[3] code
+  -BaseColor color
+  +WordedEnum type
+  -MultiSetString choices
+  -Weights weights
+  -Heights heights
+  +int[4] length =32
+  -int[4] bearing
+  +int[8] frequency
+  -int[8] amplitude
+  +float[4] weight =190.56
+  -float[4] diameter
+  -float[8] radius
+  +float[8] temperature
+  +bool isRequired
+  -bool isMeasurable
+  +string comments
+  -datetime created
+  -datetime altered
+  -numeric[18.2] salary
+  +url homePage ="http://www.ebay.com"
+  +url workPage
+  +string homeEmail matches email
+  -string mobilePhone matches phone
+  +string homeZip matches /^(\d{5,5})(?:[- ](\d{4,4}))?$/
+# make sure only one instance of the same RegEx is generated per Java class, in future may build
+# a RegEx registry for the whole model; this RegEx is identical to the one above because enclosing slashes are optional
+  +string workZip matches ^(\d{5,5})(?:[- ](\d{4,4}))?$
+  -string lastFirstName matches /^(\w+),[ ]*(\w+)/
+doc plain
+Reference to another object
+it's up to the concrete parser how it would interpret it
+the parser enforces the requirement that
+the target object has to have single-field identity
+which field's type becomes this field's type
+if the parser decides to point to the instance (like a foreign key) in SQL
+or embedding it
+end
+  -EmbeddedType emb
+  +Embodiment embo
+
+# external reference: to another entity defined in a different source file
+# that allows creating/reusing libraries
+  +org.ebay.datameta.examples.basic.incl.ExampleNsRec otherNsRef
+
+# the brackets allow additional hints and options that
+# can be interpreted by a concrete parser any way they want
+# the master parser just collects the set of those for each
+#   identity(auto) id
+  identity id, temperature
+# for example, in this case, concrete parser may decide to make
+# all single-column integral identities auto and won't even pay
+# any attention to the hint
+
+  unique context, type
+  unique(cluster) name
+# non-unique index for searching
+  index comments, name
+end
+
+record AllOptional
+    -int[4] counter
+    -datetime when
+    -string what
+    -float[4] weight
+    -float[8] distance
+end
+
+record AllOptWithMatch
+    -int[4] counter
+    -datetime when
+    -string what matches email
+end
+
+record AllOptCustMatch
+    -int[4] counter
+    -datetime when
+    -string what matches /^some\s+stuff$/
+end
+
+record AllOptWithObj
+    -int[4] counter
+    -AllOptional allOpt
+end
+
+
