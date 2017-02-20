@@ -1,7 +1,7 @@
 # Showcase of different features of the DataMetaDOM, the cross-platform Structured Data definition Language
 
-# Namespaces can be translated to Java classes, or mapped to database schemas,
-# to address entities such as com:ebay:sojourner:WordEnum etc
+# Namespaces can be translated to Java packages, or mapped to database schemas,
+# to address entities such as com:ebay:db:WordEnum etc
 # there can be only one namespace operator in the file and it must be first one
 # all referenced types should be present for the parsing; external references
 # not submitted to the parser can be handled via standard types.
