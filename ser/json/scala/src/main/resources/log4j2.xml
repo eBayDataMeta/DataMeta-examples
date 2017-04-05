@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO" strict="true" name="jdkUtilTest" shutdownHook="disable">
+    <properties>
+        <property name="appName">jsonTest</property>
+        <property name="fileName">${appName}.log</property>
+    </properties>
+    <filter type="ThresholdFilter" level="trace"/>
+
+    <appenders>
+
+        <appender type="Console" name="STDOUT">
+            <layout type="PatternLayout" charset="UTF-8">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss EEE} [%thread:%-4r] %-5level %logger{10} - %msg%n</pattern>
+            </layout>
+        </appender>
+
+        <RollingFile name="File" fileName="${fileName}" filePattern="${appName}-%d{yyyy-MM-dd}-%i.log">
+
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS EEE} %contextName:%marker %p [%thread] &lt;%r&gt; |%file#%L| %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy  interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+
+        <logger name="com.ebay" level="trace" additivity="false">
+            <appender-ref ref="File"/>
+        </logger>
+
+        <logger name="test.ebay" level="trace" additivity="false">
+            <appender-ref ref="File"/>
+        </logger>
+
+        <root level="info">
+            <appender-ref ref="File"/>
+        </root>
+    </loggers>
+
+</configuration>
