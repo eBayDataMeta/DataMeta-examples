@@ -16,3 +16,9 @@ hs_err_pid*
 .swp
 
 *.log
+
+# Idea
+.idea
+
+# Maven
+target

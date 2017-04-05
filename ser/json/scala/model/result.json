@@ -1,0 +1,81 @@
+{
+  "A" : 1234,
+  "B" : 9876,
+  "C" : "This 'is' a Cee",
+  "Text" : "This is \"very\" textual",
+  "Timing" : "2017-04-02T23:49:55.176-07:00[America/Los_Angeles]",
+  "ad" : [ 1.2, 3.4, 5.67 ],
+  "as" : [ "one", "two", "three" ],
+  "ks" : {
+    "altered" : "2017-04-05T03:48:02.061Z",
+    "amplitude" : 9876543210,
+    "bearing" : 1234,
+    "bytes" : [ 1, 127, -128, -1 ],
+    "choices" : [ 13 ],
+    "code" : "coded-recoded",
+    "color" : "Blue",
+    "comments" : "\nSo called \"comments\" are provided for:\n * 'clarity'\n * and improved communications.",
+    "context" : "Within limits",
+    "created" : "2017-04-04T20:48:02.077-07:00[America/Los_Angeles]",
+    "diameter" : 1234.567,
+    "emb" : {
+      "embo" : {
+        "id" : 10,
+        "inclusivement" : "Number One"
+      },
+      "intCode" : 100,
+      "txtCode" : "One Hundred"
+    },
+    "embeds" : [ {
+      "intCode" : 200,
+      "txtCode" : "Two Hundred"
+    }, {
+      "embo" : {
+        "id" : 30,
+        "inclusivement" : "#Three"
+      },
+      "intCode" : 300,
+      "txtCode" : "Three Hundred"
+    } ],
+    "embo" : {
+      "id" : 10,
+      "inclusivement" : "Number One"
+    },
+    "fieldName" : 42,
+    "frequency" : 1234567890123,
+    "homeEmail" : "me@home.com",
+    "homePage" : "http://ebay.com",
+    "homeZip" : "12345-6789",
+    "id" : 24,
+    "idLessNess" : [ {
+      "count" : 3,
+      "name" : "Tres",
+      "when" : "2015-01-02T01:03:01Z"
+    }, {
+      "count" : 2,
+      "name" : "Dos",
+      "when" : "2004-11-28T15:43:51-08:00[America/Los_Angeles]"
+    }, {
+      "count" : 1,
+      "name" : "Uno",
+      "when" : "1998-09-30T23:34:50Z"
+    } ],
+    "ints" : [ 1, 22, 333 ],
+    "isMeasurable" : true,
+    "isRequired" : false,
+    "lastFirstName" : "Doe, John",
+    "length" : 987929,
+    "mobilePhone" : "425-555-1234",
+    "name" : "What's in the name?",
+    "radius" : 987.654,
+    "salary" : 350456.95,
+    "strings" : [ "სამი", "ორი", "ერთი" ],
+    "temperature" : 36.7,
+    "times" : [ "2015-01-02T01:03:01Z", "2004-11-28T15:43:51-08:00[America/Los_Angeles]", "1998-09-30T23:34:50Z" ],
+    "type" : "VarString",
+    "weight" : 45.67,
+    "workPage" : "http://workable.com",
+    "workZip" : "98765"
+  }
+}
+
