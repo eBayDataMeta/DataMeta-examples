@@ -1,5 +1,7 @@
 #!/bin/env ruby
 
+# Generates testing code which is committed to the source control, which is customary in DataMeta
+
 require 'dataMetaDom' # summon the DataMeta Core which includes DataMetaDOM parser and more.
 # see the gem docs here: https://github.com/eBayDataMeta/DataMeta-gems/tree/master/meta/core/dom
 require 'dataMetaDom/pojo' # summon the POJO+Comparators generator which is the part of the dataMetaDom gem described above
@@ -25,8 +27,8 @@ begin
     dataModel.parse(File.join(%w{model jacksonSer.dmDom}), options={autoVerNs: true})
 rescue Exception => x
     # handle any errors here, notably output the DataMetaDOM model's diagnostics:
-    $stderr.puts "ERROR #{x.message}; #{dataModel.diagn}"
-    $stderr.puts x.backtrace.join("\n\t") # show regular stack trace
+    $stderr.puts %/ERROR #{x.message}; #{dataModel.diagn}
+#{x.backtrace.join("\n\t")}/ # show regular stack trace
     exit 1 # and exit with error code
 end
 
