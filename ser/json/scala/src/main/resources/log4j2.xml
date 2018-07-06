@@ -10,13 +10,13 @@
 
         <appender type="Console" name="STDOUT">
             <layout type="PatternLayout" charset="UTF-8">
-                <pattern>%d{yyyy-MM-dd HH:mm:ss EEE} [%thread:%-4r] %-5level %logger{10} - %msg%n</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss EEE} [%thread:%-4r] %-5level %logger{10} - %msg\n</pattern>
             </layout>
         </appender>
 
         <RollingFile name="File" fileName="${fileName}" filePattern="${appName}-%d{yyyy-MM-dd}-%i.log">
 
-            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS EEE} %contextName:%marker %p [%thread] &lt;%r&gt; |%file#%L| %m%n"/>
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS EEE} %contextName:%marker %p [%thread] &lt;%r&gt; |%file#%L| %m\n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy  interval="1" modulate="true"/>
                 <SizeBasedTriggeringPolicy size="50 MB"/>

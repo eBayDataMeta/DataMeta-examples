@@ -5,7 +5,7 @@
     <artifactId>ser-jackson-example_2.11</artifactId>
     <name>DataMeta JSON ser/FasterXML Example</name>
     <description>DataMeta JSON serializers with FasterXML Jackson Example</description>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <parent>
         <groupId>com.github.ebaydatameta</groupId>
         <artifactId>dataMetaParentScala-2.11</artifactId>
